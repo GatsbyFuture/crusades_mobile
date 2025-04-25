@@ -1,4 +1,7 @@
 import {Text, View} from "react-native";
+// custom modules
+import {LoginScreen} from "../modules/main/main";
+
 
 export default function App() {
     return (
@@ -9,7 +12,8 @@ export default function App() {
                 alignItems: "center",
             }}
         >
-            <Text>Hello crusades mobile app.</Text>
+            {/*<Text>Hello crusades mobile app.</Text>*/}
+            <LoginScreen/>
         </View>
     );
 }
