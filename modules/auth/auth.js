@@ -2,9 +2,9 @@ import React from 'react';
 import {View, Text, Image, TouchableOpacity, StyleSheet} from 'react-native';
 // import * as Google from 'expo-auth-session/providers/google';
 
-import {styles} from './main.style';
+import {styles} from './auth.style';
 
-export const LoginScreen = () => {
+export default function LoginScreen() {
     // const [request, response, promptAsync] = Google.useAuthRequest({
     //     expoClientId: 'YOUR_EXPO_CLIENT_ID',
     // });
