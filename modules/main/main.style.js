@@ -3,22 +3,22 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
+        padding: 5,
         backgroundColor: '#FFF',
     },
     searchInput: {
-        height: 40,
+        height: 45,
         borderColor: '#CCC',
         borderWidth: 1,
-        borderRadius: 8,
+        borderRadius: 5,
         paddingHorizontal: 10,
-        marginBottom: 10,
+        marginBottom: 5,
     },
     factCard: {
         backgroundColor: '#F9F9F9',
         padding: 15,
-        borderRadius: 8,
-        marginBottom: 10,
+        borderRadius: 5,
+        marginBottom: 5,
         borderWidth: 1,
         borderColor: '#DDD',
     },

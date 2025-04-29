@@ -6,6 +6,11 @@ export const styles = StyleSheet.create({
         padding: 10,
         backgroundColor: '#FFF',
     },
+    loading: {
+        fontSize: 16,
+        textAlign: 'center',
+        marginTop: 20,
+    },
     factTitle: {
         fontSize: 22,
         fontWeight: 'bold',
@@ -22,6 +27,10 @@ export const styles = StyleSheet.create({
         borderRadius: 8,
         alignItems: 'center',
         marginBottom: 10,
+    },
+    likeText: {
+        color: '#FFF',
+        fontWeight: 'bold',
     },
     commentCard: {
         padding: 10,

@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TextInput, FlatList, TouchableOpacity, StyleSheet} from 'react-native';
+import {View, Text, TextInput, FlatList, TouchableOpacity} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {styles} from './main.style';
 import axios from 'axios';
 import {mockFacts} from '../../mock/facts';
@@ -7,6 +8,7 @@ import {mockFacts} from '../../mock/facts';
 export default function HomeScreen() {
     const [facts, setFacts] = useState([]);
     const [search, setSearch] = useState('');
+    const navigation = useNavigation(); // React Navigation'dan navigatsiya uchun
 
     // useEffect(() => {
     //     axios
@@ -39,7 +41,10 @@ export default function HomeScreen() {
                 data={filteredFacts}
                 keyExtractor={(item) => item._id}
                 renderItem={({item}) => (
-                    <TouchableOpacity style={styles.factCard}>
+                    <TouchableOpacity
+                        style={styles.factCard}
+                        onPress={() => navigation.navigate('FactDetail', {fact_id: item._id})} // Fakt ID si bilan navigatsiya
+                    >
                         <Text style={styles.factTitle}>{item.title}</Text>
                         <Text style={styles.factContent}>{item.content.slice(0, 100)}...</Text>
                         <View style={styles.factStats}>

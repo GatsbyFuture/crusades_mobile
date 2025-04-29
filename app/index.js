@@ -21,9 +21,22 @@ function TabNavigator() {
                     else if (route.name === 'Notifications') iconName = 'notifications';
                     return <MaterialIcons name={iconName} size={size} color={color}/>;
                 },
+                tabBarActiveTintColor: '#D32F2F', // Faol tabning rangi (qizil)
+                tabBarInactiveTintColor: '#666', // Nofaol tabning rangi (kulrang)
+                tabBarIconStyle: {width: 30, height: 30}, // Ikonka o'lchamlari
+                tabBarStyle: {
+                    height: 60,
+                    paddingBottom: 5, // Pastdan bo'shliq
+                    paddingTop: 5, // Yuqoridan bo'shliq
+                    position: 'absolute', // Panelni erkin joylashtirish
+                    // bottom: 10, // Ekranning pastidan 10px masofa
+                    backgroundColor: '#FFF', // Fon rangi
+                    borderTopWidth: 1,
+                    borderTopColor: '#DDD',
+                },
             })}
         >
-            <Tab.Screen name="Home" component={HomeScreen} options={{title: 'Uy'}}/>
+            <Tab.Screen name="Home" component={HomeScreen} options={{title: 'Bosh sahifa'}}/>
             <Tab.Screen name="Profile" component={ProfileScreen} options={{title: 'Profil'}}/>
             <Tab.Screen
                 name="Notifications"
@@ -36,7 +49,16 @@ function TabNavigator() {
 
 export default function App() {
     return (
-        <Stack.Navigator initialRouteName="Main">
+        <Stack.Navigator
+            initialRouteName="Main"
+            screenOptions={{
+                cardStyleInterpolator: ({current}) => ({
+                    cardStyle: {
+                        opacity: current.progress,
+                    },
+                }),
+            }}
+        >
             <Stack.Screen
                 name="Login"
                 component={LoginScreen}
@@ -50,88 +72,28 @@ export default function App() {
             <Stack.Screen
                 name="FactDetail"
                 component={FactDetailScreen}
-                options={{title: 'Fakt tafsilotlari'}}
+                options={{
+                    title: 'Fakt tafsilotlari',
+                    headerTintColor: '#D32F2F', // Strelka va sarlavha rangi qizil
+                    headerTitleStyle: {
+                        color: '#333', // Sarlavha matni rangi (ixtiyoriy)
+                    },
+                }}
+                // headerLeft: () => (
+                //     <TouchableOpacity
+                //         onPress={() => navigation.goBack()}
+                //         style={{marginLeft: 10, padding: 5}}
+                //     >
+                //         <MaterialIcons name="arrow-back" size={25} color="#D32F2F"/>
+                //     </TouchableOpacity>
+                // ),
+                // headerStyle: {
+                //     backgroundColor: '#FFF', // Sarlavha paneli fon rangi
+                // },
+                // headerTitleStyle: {
+                //     color: '#333', // Sarlavha matni rangi
+                // },
             />
         </Stack.Navigator>
     );
 }
-// import * as React from 'react';
-// import {NavigationContainer} from '@react-navigation/native';
-// import {createStackNavigator} from '@react-navigation/stack';
-// import {View, Text, StyleSheet, Button} from 'react-native';
-//
-// const Stack = createStackNavigator();
-//
-// // Home Screen
-// function HomeScreen({navigation}) {
-//     return (
-//         <View style={styles.container}>
-//             <Text style={styles.title}>Home Page</Text>
-//             <Button
-//                 title="Go to About"
-//                 onPress={() => navigation.navigate('About')}
-//             />
-//             <Button
-//                 title="Go to Notifications"
-//                 onPress={() => navigation.navigate('Notification')}
-//             />
-//         </View>
-//     );
-// }
-//
-// // About Screen
-// function AboutScreen({navigation}) {
-//     return (
-//         <View style={styles.container}>
-//             <Text style={styles.title}>About Page</Text>
-//             <Button
-//                 title="Go to Home"
-//                 onPress={() => navigation.navigate('Home')}
-//             />
-//             <Button
-//                 title="Go to Notifications"
-//                 onPress={() => navigation.navigate('Notification')}
-//             />
-//         </View>
-//     );
-// }
-//
-// // Notification Screen
-// function NotificationScreen({navigation}) {
-//     return (
-//         <View style={styles.container}>
-//             <Text style={styles.title}>Notifications Page</Text>
-//             <Button
-//                 title="Go to Home"
-//                 onPress={() => navigation.navigate('Home')}
-//             />
-//             <Button
-//                 title="Go to About"
-//                 onPress={() => navigation.navigate('About')}
-//             />
-//         </View>
-//     );
-// }
-//
-// const styles = StyleSheet.create({
-//     container: {
-//         flex: 1,
-//         justifyContent: 'center',
-//         alignItems: 'center',
-//         padding: 16,
-//     },
-//     title: {
-//         fontSize: 24,
-//         marginBottom: 20,
-//     },
-// });
-//
-// export default function App() {
-//     return (
-//         <Stack.Navigator initialRouteName="Home">
-//             <Stack.Screen name="Home" component={HomeScreen}/>
-//             <Stack.Screen name="About" component={AboutScreen}/>
-//             <Stack.Screen name="Notification" component={NotificationScreen}/>
-//         </Stack.Navigator>
-//     );
-// }
