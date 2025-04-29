@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STL Model Viewer</title>
+    <style>
+        body {
+            margin: 0;
+        }
+
+        canvas {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/STLLoader.js"></script>
+<script>
+    // Minimal sahna sozlamalari
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const renderer = new THREE.WebGLRenderer();
+    renderer.setSize(600, 600);
+    document.body.appendChild(renderer.domElement);
+    //
+    // // Oddiy yorug'lik
+    scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+    //
+    // // STL modelni yuklash
+    const loader = new THREE.STLLoader();
+    loader.load('https://online.hrplus.uz/assets/images/part1.stl', (geometry) => {
+        const material = new THREE.MeshStandardMaterial({color: 0x00ff00});
+        const mesh = new THREE.Mesh(geometry, material);
+        scene.add(mesh);
+
+        // Modelni markazlashtirish
+        geometry.center();
+        camera.position.z = 20; // Kamerani modeldan uzoqlashtirish
+    }, undefined, (error) => {
+        console.error('Model yuklashda xatolik:', error);
+    });
+
+    // Modelni aylantirish uchun OrbitControls
+    const controls = new THREE.OrbitControls(camera, renderer.domElement);
+    //
+    // Animatsiya tsikli
+    function animate() {
+        requestAnimationFrame(animate);
+        controls.update();
+        renderer.render(scene, camera);
+    }
+
+    animate();
+</script>
+</body>
+</html>

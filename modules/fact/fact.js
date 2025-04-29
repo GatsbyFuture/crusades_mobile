@@ -15,6 +15,7 @@ export default function FactDetailScreen({route}) {
     //         headers: {Authorization: `Bearer YOUR_JWT_TOKEN`},
     //     }).then((response) => setFact(response.data)).catch((error) => console.error(error));
     // }, [fact_id]);
+
     useEffect(() => {
         const fit_fact = mockFacts.find(fact => fact._id === fact_id);
         setFact(mockFacts[fit_fact]);
