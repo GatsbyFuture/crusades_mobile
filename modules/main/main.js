@@ -1,6 +1,7 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import {View, Text, TextInput, FlatList, TouchableOpacity} from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import {useNavigation, useIsFocused} from '@react-navigation/native';
+import {useSearch} from '../../components/search/search';
 import {styles} from './main.style';
 import axios from 'axios';
 import {mockFacts} from '../../mock/facts';
@@ -9,6 +10,7 @@ export default function HomeScreen() {
     const [facts, setFacts] = useState([]);
     const [search, setSearch] = useState('');
     const navigation = useNavigation(); // React Navigation'dan navigatsiya uchun
+    const {searchInputRef} = useSearch(); // Kontekst dan ref
 
     // useEffect(() => {
     //     axios
@@ -32,6 +34,7 @@ export default function HomeScreen() {
     return (
         <View style={styles.container}>
             <TextInput
+                ref={searchInputRef}
                 style={styles.searchInput}
                 placeholder="Fakt qidirish..."
                 value={search}
@@ -57,3 +60,10 @@ export default function HomeScreen() {
         </View>
     );
 }
+
+// Fokus funksiyasini eksport qilish
+export const focusSearchInput = () => {
+    if (HomeScreen.searchInputRef && HomeScreen.searchInputRef.current) {
+        HomeScreen.searchInputRef.current.focus();
+    }
+};
