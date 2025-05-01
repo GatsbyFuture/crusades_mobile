@@ -8,6 +8,8 @@ import HomeScreen from '@/modules/main/main';
 import FactDetailScreen from '@/modules/fact/fact';
 import ProfileScreen from '@/modules/prof/prof';
 import NotificationsScreen from '@/modules/note/note';
+import SettingsScreen from '@/modules/setgs/setgs';
+import AddFactScreen from '@/modules/fact/add.fact';
 import {SearchProvider, useSearch} from '../components/search/search';
 
 const Stack = createStackNavigator();
@@ -23,7 +25,7 @@ function TabNavigator() {
                     let iconName;
                     if (route.name === 'Home') iconName = 'home';
                     else if (route.name === 'Search') iconName = 'search';
-                    else if (route.name === 'Profile') iconName = 'person';
+                    else if (route.name === 'Settings') iconName = 'settings';
                     return <MaterialIcons name={iconName} size={size} color={color}/>;
                 },
                 tabBarActiveTintColor: '#D32F2F', // Faol tabning rangi (qizil)
@@ -71,7 +73,8 @@ function TabNavigator() {
                     ),
                 }}
             />
-            <Tab.Screen name="Profile" component={ProfileScreen} options={{title: 'Profil'}}/>
+            {/*<Tab.Screen name="Profile" component={ProfileScreen} options={{title: 'Profil'}}/>*/}
+            <Tab.Screen name="Settings" component={SettingsScreen} options={{title: 'Sozlamalar'}}/>
         </Tab.Navigator>
     );
 }
@@ -134,6 +137,17 @@ export default function App() {
                         // headerTitleStyle: {
                         //     color: '#333', // Sarlavha matni rangi
                         // },
+                    }}
+                />
+                <Stack.Screen
+                    name="AddFactScreen"
+                    component={AddFactScreen}
+                    options={{
+                        title: 'Fact qo\'ish',
+                        headerTintColor: '#D32F2F', // Strelka va sarlavha rangi qizil
+                        headerTitleStyle: {
+                            color: '#333', // Sarlavha matni rangi (ixtiyoriy)
+                        },
                     }}
                 />
             </Stack.Navigator>
