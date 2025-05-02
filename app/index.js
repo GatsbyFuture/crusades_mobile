@@ -83,7 +83,7 @@ export default function App() {
     return (
         <SearchProvider>
             <Stack.Navigator
-                initialRouteName="Main"
+                initialRouteName="Login"
                 screenOptions={{
                     cardStyleInterpolator: ({current}) => ({
                         cardStyle: {
