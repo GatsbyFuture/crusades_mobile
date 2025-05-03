@@ -1,6 +1,6 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, TextInput, FlatList, TouchableOpacity} from 'react-native';
-import {useNavigation, useIsFocused} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 import {useSearch} from '../../components/search/search';
 import {styles} from './main.style';
 import axios from 'axios';

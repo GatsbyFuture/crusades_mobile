@@ -14,7 +14,7 @@ export default function FactDetailScreen() {
     const navigation = useNavigation();
     const route = useRoute();
     const {fact_id} = route.params;
-    console.log('fact_id:', fact_id);
+    // console.log('fact_id:', fact_id);
     // useEffect(() => {
     //     axios.get(`YOUR_API_URL/facts/${fact_id}`, {
     //         headers: {Authorization: `Bearer YOUR_JWT_TOKEN`},
@@ -35,7 +35,7 @@ export default function FactDetailScreen() {
         //     setComment('');
         //     // Faktni qayta yuklash
         // }).catch((error) => console.error(error));
-        console.log('comment:', comment);
+        // console.log('comment:', comment);
     };
 
     if (!fact) {

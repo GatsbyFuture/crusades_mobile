@@ -1,11 +1,39 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, Image, TouchableOpacity, TextInput, Platform} from 'react-native';
 import {Picker} from '@react-native-picker/picker';
+import * as Device from 'expo-device';
 import {styles} from './auth.style';
+import axios from 'axios';
 
 export default function LoginScreen() {
     const [full_name, setFullName] = useState('');
     const [language, setLanguage] = useState('uz');
+    // const [deviceId, setDeviceId] = useState('');
+
+    const handleSubmit = () => {
+        if (!full_name.trim()) {
+            alert('Iltimos, F.I.O kiriting!');
+            return;
+        }
+        if (!language) {
+            alert('Iltimos, tilni tanlang!');
+            return;
+        }
+        console.log('Submitted:', {full_name, language, deviceId});
+        // Backendga yuborish misoli:
+        // fetch('http://api.example.com/users', {
+        //   method: 'POST',
+        //   headers: { 'Content-Type': 'application/json' },
+        //   body: JSON.stringify({
+        //     fullName: full_name,
+        //     language,
+        //     deviceId,
+        //     notificationsEnabled: true,
+        //     darkMode: false,
+        //     facts: [],
+        //   }),
+        // });
+    };
 
     return (
         <View style={styles.container}>
@@ -34,7 +62,7 @@ export default function LoginScreen() {
                 </View>
                 <TouchableOpacity
                     style={styles.button}
-                    onPress={() => console.log('tap', {full_name, language})}
+                    onPress={handleSubmit}
                 >
                     <Text style={styles.buttonText}>Ilovaga kirish</Text>
                 </TouchableOpacity>
