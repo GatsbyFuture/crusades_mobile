@@ -5,6 +5,8 @@ import {Picker} from '@react-native-picker/picker';
 import * as Device from 'expo-device';
 import {styles} from './auth.style';
 import axios from 'axios';
+import {config} from '../../config/config';
+
 
 export default function LoginScreen() {
     const navigation = useNavigation();
@@ -28,7 +30,7 @@ export default function LoginScreen() {
         }
 
         axios.post(
-            'http://192.168.105.143:5000/users/create',
+            `${config.URL}/users/create`,
             {
                 mobile_id: deviceId,
                 full_name: full_name,

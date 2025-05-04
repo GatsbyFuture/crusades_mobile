@@ -1,5 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Switch, TouchableOpacity, Appearance, Modal, FlatList} from 'react-native';
+import {
+    View,
+    Text,
+    Switch,
+    TouchableOpacity,
+    Appearance,
+    Modal,
+    FlatList,
+    Linking
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import {MaterialIcons} from '@expo/vector-icons';
 import {styles} from './setgs.style';
@@ -44,9 +53,18 @@ export default function SettingsScreen() {
         navigation.navigate('AddFactScreen');
     };
 
-    const handleAdRequest = () => {
-        console.log('Reklama berish uchun murojaat yuborildi');
-        alert('Reklama murojaatingiz qabul qilindi. Tez orada bog\'lanamiz!');
+    const handleAdRequest = async () => {
+        try {
+            const url = 'https://t.me/jack_20010912';
+            const supported = await Linking.canOpenURL(url);
+            if (supported) {
+                await Linking.openURL(url);
+            } else {
+                console.error('URL ochilmadi:', url);
+            }
+        } catch (error) {
+            console.error('Xato:', error.message);
+        }
     };
 
     return (
@@ -91,8 +109,10 @@ export default function SettingsScreen() {
                 </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={{backgroundColor: isDarkMode ? '#D32F2F' : '#F4F3F4', ...styles.settingButton}}
-                              onPress={handleAdRequest}>
+            <TouchableOpacity
+                style={[styles.settingButton, {backgroundColor: isDarkMode ? '#D32F2F' : '#F4F3F4'}]}
+                onPress={handleAdRequest}
+            >
                 <Text style={[styles.settingButtonText, isDarkMode ? styles.darkText : styles.lightText]}>
                     Reklama berish uchun murojaat
                 </Text>

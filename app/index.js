@@ -5,6 +5,7 @@ import {SearchProvider} from '../components/search/search';
 import axios from 'axios';
 // custom component
 import Navigator from '../components/navgts/pages.navgts';
+import {config} from '../config/config';
 
 export default function App() {
     const [deviceId, setDeviceId] = useState('');
@@ -17,7 +18,7 @@ export default function App() {
                 const id = Device.deviceId || Device.osInternalBuildId || Device.deviceName;
                 setDeviceId(id || 'Unknown');
 
-                const response = await axios.get('http://192.168.105.143:5000/users/get-one', {
+                const response = await axios.get(`${config.URL}/users/get-one`, {
                     params: {mobile_id: id},
                     // headers: { Authorization: `Bearer YOUR_JWT_TOKEN` }, // Haqiqiy token qo'shing
                 });
