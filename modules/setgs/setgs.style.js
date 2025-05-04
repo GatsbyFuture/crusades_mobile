@@ -3,63 +3,95 @@ import {StyleSheet} from 'react-native';
 export const styles = StyleSheet.create({
     container: {
         flex: 1,
-        padding: 10,
+        padding: 16,
+    },
+    lightContainer: {
         backgroundColor: '#FFF',
     },
-    avatar: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        alignSelf: 'center',
-        marginBottom: 10,
+    darkContainer: {
+        backgroundColor: '#0d1117',
     },
-    username: {
-        fontSize: 20,
+    header: {
+        fontSize: 24,
         fontWeight: 'bold',
-        textAlign: 'center',
-        color: '#333',
+        marginBottom: 24,
     },
-    bioInput: {
-        borderColor: '#CCC',
-        borderWidth: 1,
-        borderRadius: 8,
-        padding: 10,
-        marginVertical: 10,
-        minHeight: 80,
+    lightText: {
+        color: '#0d1117',
     },
-    updateButton: {
-        backgroundColor: '#D32F2F',
-        padding: 10,
-        borderRadius: 8,
-        alignItems: 'center',
-        marginBottom: 10,
-    },
-    updateButtonText: {
+    darkText: {
         color: '#FFF',
-        fontWeight: 'bold',
     },
-    factCard: {
-        backgroundColor: '#F9F9F9',
-        padding: 15,
+    settingItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 10,
+        borderBottomWidth: 1,
+        borderBottomColor: '#DDD',
+    },
+    settingItemLang: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 20,
+        paddingRight: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#DDD',
+    },
+    settingText: {
+        fontSize: 16,
+    },
+    settingButton: {
+        padding: 16,
+        marginTop: 18,
+        borderRadius: 5,
+    },
+    settingButtonText: {
+        fontSize: 15,
+        fontWeight: '500',
+        textAlign: 'center',
+    },
+    modalContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        backgroundColor: 'rgba(0,0,0,0.2)',
+    },
+    modalContent: {
+        marginHorizontal: 20,
         borderRadius: 8,
-        marginBottom: 10,
-        borderWidth: 1,
-        borderColor: '#DDD',
+        padding: 16,
+        maxHeight: '50%',
     },
-    factTitle: {
+    lightModal: {
+        backgroundColor: '#FFF',
+    },
+    darkModal: {
+        backgroundColor: '#444',
+    },
+    modalHeader: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: '#333',
+        marginBottom: 16,
     },
-    logoutButton: {
-        backgroundColor: '#666',
-        padding: 10,
+    languageItem: {
+        paddingVertical: 12,
+        borderBottomWidth: 1,
+        borderBottomColor: '#DDD',
+    },
+    languageText: {
+        fontSize: 16,
+    },
+    closeButton: {
+        marginTop: 16,
+        padding: 12,
+        backgroundColor: '#D32F2F',
         borderRadius: 8,
         alignItems: 'center',
-        marginTop: 10,
     },
-    logoutButtonText: {
+    closeButtonText: {
         color: '#FFF',
+        fontSize: 16,
         fontWeight: 'bold',
     },
 });
