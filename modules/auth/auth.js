@@ -1,14 +1,21 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, Image, TouchableOpacity, TextInput, Platform} from 'react-native';
+import {View, Text, Image, TouchableOpacity, TextInput} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import {Picker} from '@react-native-picker/picker';
 import * as Device from 'expo-device';
 import {styles} from './auth.style';
 import axios from 'axios';
 
 export default function LoginScreen() {
+    const navigation = useNavigation();
+    const [deviceId, setDeviceId] = useState('');
     const [full_name, setFullName] = useState('');
     const [language, setLanguage] = useState('uz');
-    // const [deviceId, setDeviceId] = useState('');
+
+    useEffect(() => {
+        const id = Device.deviceId || Device.osInternalBuildId || Device.deviceName;
+        setDeviceId(id || 'Unknown');
+    }, []);
 
     const handleSubmit = () => {
         if (!full_name.trim()) {
@@ -19,20 +26,26 @@ export default function LoginScreen() {
             alert('Iltimos, tilni tanlang!');
             return;
         }
-        console.log('Submitted:', {full_name, language, deviceId});
-        // Backendga yuborish misoli:
-        // fetch('http://api.example.com/users', {
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/json' },
-        //   body: JSON.stringify({
-        //     fullName: full_name,
-        //     language,
-        //     deviceId,
-        //     notificationsEnabled: true,
-        //     darkMode: false,
-        //     facts: [],
-        //   }),
-        // });
+
+        axios.post(
+            'http://192.168.105.143:5000/users/create',
+            {
+                mobile_id: deviceId,
+                full_name: full_name,
+                lang: language,
+            },
+            {
+                Authorization: `Bearer YOUR_JWT_TOKEN`
+            }
+        ).then(response => {
+            const {data: user_data} = response.data;
+            if (user_data) {
+                navigation.navigate('Main');
+            }
+        }).catch(error => {
+            alert('Ma\'lumotlar uzotishda xatolik bo\'ldi iltimos qayta urinib ko\'ring')
+            console.error('Usereni jo\'natishda xatolik', error);
+        })
     };
 
     return (

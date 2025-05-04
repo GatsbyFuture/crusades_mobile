@@ -1,12 +1,10 @@
 import * as Device from 'expo-device';
 import {useEffect, useState} from 'react';
-import {useNavigation} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import {SearchProvider} from '../components/search/search';
 import axios from 'axios';
 // custom component
 import Navigator from '../components/navgts/pages.navgts';
-
 
 export default function App() {
     const [deviceId, setDeviceId] = useState('');
