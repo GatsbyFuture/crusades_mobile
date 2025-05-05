@@ -12,6 +12,9 @@ import {
 import {useNavigation} from '@react-navigation/native';
 import {MaterialIcons} from '@expo/vector-icons';
 import {styles} from './setgs.style';
+import axios from 'axios';
+import {config} from '../../config/config';
+import * as Device from 'expo-device';
 
 export default function SettingsScreen() {
     const navigation = useNavigation();
@@ -19,6 +22,7 @@ export default function SettingsScreen() {
     const [isDarkMode, setIsDarkMode] = useState(Appearance.getColorScheme() === 'dark');
     const [selectedLanguage, setSelectedLanguage] = useState('uz');
     const [languageModalVisible, setLanguageModalVisible] = useState(false);
+    const [userUpdated, setUserUpdated] = useState(false);
 
     const languages = [
         {id: 'uz', name: 'O\'zbek'},
@@ -35,19 +39,49 @@ export default function SettingsScreen() {
 
     const toggleNotifications = () => {
         setIsNotificationsEnabled((prev) => !prev);
+        setUserUpdated(true);
         console.log('Notifications:', isNotificationsEnabled ? 'O\'chirildi' : 'Yoqildi');
     };
 
     const toggleDarkMode = () => {
         setIsDarkMode((prev) => !prev);
+        setUserUpdated(true);
         console.log('Dark mode:', isDarkMode ? 'O\'chirildi' : 'Yoqildi');
     };
 
     const selectLanguage = (langId) => {
         setSelectedLanguage(langId);
         setLanguageModalVisible(false);
+        setUserUpdated(true);
         console.log('Selected language:', langId);
     };
+
+    // patch for updated user settings
+    const toggleUpdateChanges = () => {
+        const device_id = Device.deviceId || Device.osInternalBuildId || Device.deviceName;
+
+        axios.patch(
+            `${config.URL}/users/update`,
+            {
+                mobile_id: device_id,
+                lang: selectedLanguage,
+                dark_mode: isDarkMode,
+                notifications: isNotificationsEnabled
+            },
+            {
+                Authorization: `Bearer YOUR_JWT_TOKEN`
+            }
+        ).then(response => {
+            const {data: user_data} = response.data;
+            if (user_data) {
+                setUserUpdated(false);
+            }
+        }).catch(error => {
+            alert('Ma\'lumotlar uzotishda xatolik bo\'ldi iltimos qayta urinib ko\'ring')
+            console.error('Usereni yangilashda xatolik', error);
+        })
+
+    }
 
     const handleFactPermission = () => {
         navigation.navigate('AddFactScreen');
@@ -101,6 +135,18 @@ export default function SettingsScreen() {
                     <MaterialIcons name="language" size={24} color={isDarkMode ? '#FFF' : '#333'}/>
                 </TouchableOpacity>
             </View>
+
+            <TouchableOpacity
+                style={{
+                    backgroundColor: isDarkMode ? '#D32F2F' : '#F4F3F4',
+                    ...styles.settingButton,
+                    display: userUpdated ? 'block' : 'none'
+                }}
+                onPress={toggleUpdateChanges}>
+                <Text style={[styles.settingButtonText, isDarkMode ? styles.darkText : styles.lightText]}>
+                    O'zgarishlarni saqlash
+                </Text>
+            </TouchableOpacity>
 
             <TouchableOpacity style={{backgroundColor: isDarkMode ? '#D32F2F' : '#F4F3F4', ...styles.settingButton}}
                               onPress={handleFactPermission}>
