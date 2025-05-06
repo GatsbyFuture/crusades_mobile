@@ -22,7 +22,10 @@ export default function SettingsScreen() {
     const [isDarkMode, setIsDarkMode] = useState(Appearance.getColorScheme() === 'dark');
     const [selectedLanguage, setSelectedLanguage] = useState('uz');
     const [languageModalVisible, setLanguageModalVisible] = useState(false);
+    const [deviceId, setDeviceId] = useState('');
+
     const [userUpdated, setUserUpdated] = useState(false);
+
 
     const languages = [
         {id: 'uz', name: 'O\'zbek'},
@@ -31,10 +34,30 @@ export default function SettingsScreen() {
     ];
 
     useEffect(() => {
-        const subscription = Appearance.addChangeListener(({colorScheme}) => {
-            setIsDarkMode(colorScheme === 'dark');
+        const id = Device.deviceId || Device.osInternalBuildId || Device.deviceName;
+        setDeviceId(id || 'Unknown');
+
+        axios.get(
+            `${config.URL}/users/get-one`,
+            {
+                mobile_id: deviceId,
+                lang: selectedLanguage,
+                dark_mode: isDarkMode,
+                notifications: isNotificationsEnabled
+            },
+            {
+                Authorization: `Bearer YOUR_JWT_TOKEN`
+            }
+        ).then(response => {
+            const {data: {_id, lang, dark_mode, notifications}} = response.data;
+            if (_id) {
+                setSelectedLanguage(lang);
+                setIsDarkMode(dark_mode);
+                setIsNotificationsEnabled(notifications);
+            }
+        }).catch(() => {
+            alert('Ma\'lumotlar uzotishda xatolik bo\'ldi iltimos qayta urinib ko\'ring')
         });
-        return () => subscription.remove();
     }, []);
 
     const toggleNotifications = () => {
@@ -63,7 +86,7 @@ export default function SettingsScreen() {
         axios.patch(
             `${config.URL}/users/update`,
             {
-                mobile_id: device_id,
+                mobile_id: deviceId,
                 lang: selectedLanguage,
                 dark_mode: isDarkMode,
                 notifications: isNotificationsEnabled
